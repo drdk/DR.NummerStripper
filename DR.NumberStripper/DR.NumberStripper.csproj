@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net461</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Description>Lille værktøj til at rense productionsnumre kopieret fra WhatsOn. Og til at un-escape UNC-stier. Tryk Ctrl+Alt+Shift+S for at prøve at starte indholdet af udklipningsholderen.</Description>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SharpClipboard" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>
