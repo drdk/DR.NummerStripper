@@ -24,7 +24,7 @@ namespace DR.NumberStripper
 
         public TrayIconContext(string[] args)
         {
-            _startCurrent = new MenuItem("Try to &Start current (Ctrl+Alt+Shift+S)", StartCurrent);
+            _startCurrent = new MenuItem("Prøv at  &Starte nuværende indhold (Ctrl+Alt+Shift+S)", StartCurrent);
             if (!Clipboard.ContainsText() || !IsStartable(Clipboard.GetText()))
             {
                 _startCurrent.Enabled = false;
@@ -33,8 +33,8 @@ namespace DR.NumberStripper
             {
                 new MenuItem("-"),
                 _startCurrent,
-                new MenuItem("&About", About),
-                new MenuItem("E&xit", Exit),
+                new MenuItem("&Om", About),
+                new MenuItem("&Afslut", Exit),
             };
 
             _trayIcon = new NotifyIcon()
@@ -66,9 +66,10 @@ namespace DR.NumberStripper
                     _history.RemoveAt(0);
                 }
 
+                var c = 1;
                 _trayIcon.ContextMenu = new ContextMenu(
-                    _history.Select(x => IsStartable(x) ? 
-                        new MenuItem(x, Start) : new MenuItem(x, Copy)).Reverse().Concat(_baseItems).ToArray());
+                    _history.AsEnumerable().Reverse().Select(x => IsStartable(x) ? 
+                        new MenuItem($"&{c++}: {x}", Start) : new MenuItem($"&{c++}: {x}", Copy)).Concat(_baseItems).ToArray());
             }
         }
 
@@ -97,6 +98,7 @@ namespace DR.NumberStripper
             // Hide tray icon, otherwise it will remain shown until user mouses over it
             _trayIcon.Visible = false;
             _clipboard?.Dispose();
+            _startHook?.Dispose();
             Application.Exit();
         }
 
@@ -124,7 +126,7 @@ namespace DR.NumberStripper
         {
             if (sender is MenuItem menuItem)
             {
-                var process = System.Diagnostics.Process.Start(menuItem.Text);
+                var process = System.Diagnostics.Process.Start(menuItem.Text.Substring(4));
             }
         }
 
@@ -145,7 +147,7 @@ namespace DR.NumberStripper
         {
             if (sender is MenuItem menuItem)
             {
-                Clipboard.SetText(menuItem.Text);
+                Clipboard.SetText(menuItem.Text.Substring(4));
             }
         }
 
