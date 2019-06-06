@@ -46,7 +46,7 @@ namespace DR.NummerStripper
                 Icon = icon,
                 ContextMenu = new ContextMenu(_baseItems),
                 Visible = true,
-                Text = "NumberStripper",
+                Text = "NummerStripper",
             };
 
             _trayIcon.Click += Click;
