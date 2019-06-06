@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WK.Libraries.SharpClipboardNS;
 
-namespace DR.NumberStripper
+namespace DR.NummerStripper
 {
     internal class TrayIconContext : ApplicationContext
     {
@@ -39,7 +39,7 @@ namespace DR.NumberStripper
 
             _trayIcon = new NotifyIcon()
             {
-                Icon = new System.Drawing.Icon(_assembly.GetManifestResourceStream("DR.NumberStripper.Icon.ico") ?? throw new InvalidOperationException()),
+                Icon = new System.Drawing.Icon(_assembly.GetManifestResourceStream("DR.NummerStripper.Icon.ico") ?? throw new InvalidOperationException()),
                 ContextMenu = new ContextMenu(_baseItems),
                 Visible = true,
                 Text = "NumberStripper",

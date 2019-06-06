@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace DR.NumberStripper
+namespace DR.NummerStripper
 {
     // taken from: https://social.msdn.microsoft.com/Forums/en-US/c061954b-19bf-463b-a57d-b09c98a3fe7d/assign-global-hotkey-to-a-system-tray-application-in-c
     public sealed class KeyboardHook : IDisposable
