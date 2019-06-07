@@ -5,101 +5,122 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DR.NummerStripper.Properties;
 
 namespace DR.NummerStripper
 {
     internal class ProductionForm : Form
     {
-        private readonly string _prdNmr;
-        private Label lbPrdNmr;
-        private Button btnMA;
-        private Button btnODPubPlan;
-        private Button btnPSDB;
+        private string _prdNbr;
+        private FlowLayoutPanel flowPanel;
+        private Label helpText;
+        private Label lbPrdNbr;
 
-        internal ProductionForm(string prdNmr)
+        internal string PrdNbr
         {
-            InitializeComponent();
-            lbPrdNmr.Text = _prdNmr = prdNmr;
+            set
+            {
+                _prdNbr = value;
+                lbPrdNbr.Text = _prdNbr;
+            }
         }
+
+        internal ProductionForm(string prdNbr)
+        {
+            _prdNbr = prdNbr;
+            InitializeComponent();
+            lbPrdNbr.Text = _prdNbr;
+            var index = 1;
+            foreach (var link in Settings.Default.ProductionNumberLinks.Cast<string>()
+                .Select(x =>
+                {
+                    var temp = x.Split(';');
+
+                    return new
+                    {
+                        Index = index++,
+                        Name = temp[0],
+                        Target = temp[1]
+                    };
+                }))
+            {
+                var btn = new Button()
+                {
+                    Text = $"&{link.Index} : {link.Name}",
+                    Size = new System.Drawing.Size(286, 23),
+                    TabIndex = link.Index + 1
+                };
+                btn.Click += (sender, args) =>
+                {
+                    var process = Process.Start(link.Target.Replace("{prdNbr}", _prdNbr));
+                    this.Close();
+                };
+                this.flowPanel.Controls.Add(btn);
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductionForm));
-            this.lbPrdNmr = new System.Windows.Forms.Label();
-            this.btnMA = new System.Windows.Forms.Button();
-            this.btnPSDB = new System.Windows.Forms.Button();
-            this.btnODPubPlan = new System.Windows.Forms.Button();
+            this.lbPrdNbr = new System.Windows.Forms.Label();
+            this.flowPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.helpText = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // lbPrdNmr
+            // lbPrdNbr
             // 
-            this.lbPrdNmr.AutoSize = true;
-            this.lbPrdNmr.Location = new System.Drawing.Point(13, 13);
-            this.lbPrdNmr.Name = "lbPrdNmr";
-            this.lbPrdNmr.Size = new System.Drawing.Size(41, 13);
-            this.lbPrdNmr.TabIndex = 0;
-            this.lbPrdNmr.Text = "prdNmr";
+            this.lbPrdNbr.AutoSize = true;
+            this.lbPrdNbr.Location = new System.Drawing.Point(13, 13);
+            this.lbPrdNbr.Name = "lbPrdNbr";
+            this.lbPrdNbr.Size = new System.Drawing.Size(39, 13);
+            this.lbPrdNbr.TabIndex = 0;
+            this.lbPrdNbr.Text = "prdNbr";
             // 
-            // btnMA
+            // flowPanel
             // 
-            this.btnMA.Location = new System.Drawing.Point(12, 29);
-            this.btnMA.Name = "btnMA";
-            this.btnMA.Size = new System.Drawing.Size(260, 23);
-            this.btnMA.TabIndex = 1;
-            this.btnMA.Text = "MA";
-            this.btnMA.UseVisualStyleBackColor = true;
-            this.btnMA.Click += new System.EventHandler(this.btnMA_Click);
+            this.flowPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowPanel.Location = new System.Drawing.Point(13, 30);
+            this.flowPanel.Name = "flowPanel";
+            this.flowPanel.Size = new System.Drawing.Size(289, 265);
+            this.flowPanel.TabIndex = 1;
             // 
-            // btnPSDB
+            // helpText
             // 
-            this.btnPSDB.Location = new System.Drawing.Point(12, 58);
-            this.btnPSDB.Name = "btnPSDB";
-            this.btnPSDB.Size = new System.Drawing.Size(260, 23);
-            this.btnPSDB.TabIndex = 2;
-            this.btnPSDB.Text = "PSDB";
-            this.btnPSDB.UseVisualStyleBackColor = true;
-            this.btnPSDB.Click += new System.EventHandler(this.btnPSDB_Click);
-            // 
-            // btnODPubPlan
-            // 
-            this.btnODPubPlan.Location = new System.Drawing.Point(12, 87);
-            this.btnODPubPlan.Name = "btnODPubPlan";
-            this.btnODPubPlan.Size = new System.Drawing.Size(260, 23);
-            this.btnODPubPlan.TabIndex = 3;
-            this.btnODPubPlan.Text = "OD PubPlan";
-            this.btnODPubPlan.UseVisualStyleBackColor = true;
-            this.btnODPubPlan.Click += new System.EventHandler(this.btnODPubPlan_Click);
+            this.helpText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.helpText.AutoSize = true;
+            this.helpText.Location = new System.Drawing.Point(13, 299);
+            this.helpText.Name = "helpText";
+            this.helpText.Size = new System.Drawing.Size(260, 13);
+            this.helpText.TabIndex = 2;
+            this.helpText.Text = "Klik <nummer> for starte, eller Esc for at lukke vinduet";
             // 
             // ProductionForm
             // 
-            this.ClientSize = new System.Drawing.Size(284, 124);
-            this.Controls.Add(this.btnODPubPlan);
-            this.Controls.Add(this.btnPSDB);
-            this.Controls.Add(this.btnMA);
-            this.Controls.Add(this.lbPrdNmr);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(314, 323);
+            this.Controls.Add(this.helpText);
+            this.Controls.Add(this.flowPanel);
+            this.Controls.Add(this.lbPrdNbr);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ProductionForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "ProduktionsNummer værktøj";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
-        private void btnMA_Click(object sender, EventArgs e)
-        {
-            var process = Process.Start($"http://ma:7000/#!/search/item?q={_prdNmr}");
-            this.Close();
-        }
-
-        private void btnODPubPlan_Click(object sender, EventArgs e)
-        {
-            var process = Process.Start($"https://odpubplan/Publication/Search?query={_prdNmr}");
-            this.Close();
-        }
-
-        private void btnPSDB_Click(object sender, EventArgs e)
-        {
-            var process = Process.Start($"http://mu.net.dr.dk/admin/#searchString={_prdNmr}&searchCategories=10%2C20%2C30%2C90&limit=20&channelType=TV%2CRADIO");
-            this.Close();
         }
 
     }

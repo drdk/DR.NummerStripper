@@ -23,6 +23,8 @@ namespace DR.NummerStripper
         private MenuItem[] _baseItems;
         private SharpClipboard _clipboard;
         private readonly KeyboardHook _startHook;
+        private ProductionForm _productionForm = null;
+
 
         public TrayIconContext(string[] args)
         {
@@ -50,7 +52,7 @@ namespace DR.NummerStripper
             };
 
             _trayIcon.Click += Click;
-            
+            _trayIcon.BalloonTipClicked += StartCurrent;
             _clipboard = new SharpClipboard();
             _clipboard.ClipboardChanged += ClipboardChanged;
             _startHook = new KeyboardHook();
@@ -73,9 +75,12 @@ namespace DR.NummerStripper
                 var c = 1;
                 _trayIcon.ContextMenu = new ContextMenu(
                     _history.AsEnumerable().Reverse().Select(x => SafeToStart(x) ? 
-                        new MenuItem($"&{c++}: {x}", Start) : new MenuItem($"&{c++}: {x}", Copy)).Concat(_baseItems).ToArray());
+                        new MenuItem($"&{c++}: {Crop(x)}", Start) : new MenuItem($"&{c++}: {Crop(x)}", Copy)).Concat(_baseItems).ToArray());
             }
         }
+
+        private string Crop(string text) => 
+            text.Length > 96 ? $"{text.Substring(0, 96)}..." : text;
 
         private bool SafeToStart(string text)
         {
@@ -101,6 +106,7 @@ namespace DR.NummerStripper
             _trayIcon.Visible = false;
             _clipboard?.Dispose();
             _startHook?.Dispose();
+            _productionForm?.Dispose();
             Application.Exit();
         }
 
@@ -124,14 +130,31 @@ namespace DR.NummerStripper
             MessageBox.Show(aboutText, aboutCaption, MessageBoxButtons.OK);
         }
 
-        private static string StripSelector(MenuItem menuItem) => menuItem.Text.Substring(4);
+        private string GetTextFromHistory(MenuItem menuItem) =>
+            _history.AsEnumerable().Reverse().Skip(
+                int.Parse(menuItem.Text.Substring(1,1)) - 1 ).First();
 
         void Start(object sender, EventArgs e)
         {
             if (!(sender is MenuItem menuItem)) return;
 
-            Start(StripSelector(menuItem));
+            Start(GetTextFromHistory(menuItem));
             Copy(sender,e);
+        }
+
+        void StartOrUpdateProductionForm(string prdNbr)
+        {
+            if (_productionForm == null || _productionForm.IsDisposed)
+            {
+                _productionForm = new ProductionForm(prdNbr);
+            }
+            else
+            {
+                _productionForm.PrdNbr = prdNbr;
+            }
+            _productionForm.Show();
+            _productionForm.BringToFront();
+            _productionForm.Activate();
         }
 
         void Start(string text)
@@ -140,8 +163,7 @@ namespace DR.NummerStripper
             {
                 if (PrdNmr.IsMatch(text))
                 {
-                    var form = new ProductionForm(text);
-                    form.ShowDialog();
+                    StartOrUpdateProductionForm(text);
                 }
                 else
                 {
@@ -163,7 +185,7 @@ namespace DR.NummerStripper
         {
             if (sender is MenuItem menuItem)
             {
-                Clipboard.SetText(StripSelector(menuItem));
+                Clipboard.SetText(GetTextFromHistory(menuItem));
             }
         }
 
@@ -179,26 +201,37 @@ namespace DR.NummerStripper
         private Regex EscapedUncPath = new Regex(@"^\\{4}", RegexOptions.Compiled);
         private Regex WhatsOnPrdNmr = new Regex(@"^[01]-\d{3}-\d{2}-\d{4}-\d$", RegexOptions.Compiled);
         private Regex PrdNmr = new Regex(@"[01]\d{9}", RegexOptions.Compiled);
+        private string _lastText = string.Empty;
 
         private void UpdateIcon()
         {
             if (Clipboard.ContainsText())
             {
                 var text = Clipboard.GetText();
+                if (_lastText == text) return;
+                _lastText = text = Clipboard.GetText();
+
                 var safe = SafeToStart(text);
 
                 _startCurrent.Enabled = safe;
 
                 if (PrdNmr.IsMatch(text))
                 {
+                    _trayIcon.ShowBalloonTip(2000, "Produktionsnummer", text, ToolTipIcon.Info);
                     _trayIcon.Icon = IconFactory.MakeOne('P', Brushes.Red);
+                    if (_productionForm != null && !_productionForm.IsDisposed)
+                    {
+                        StartOrUpdateProductionForm(text);
+                    }
                     return;
                 }
                 if (safe)
                 {
+                    _trayIcon.ShowBalloonTip(2000, "Startbar", text, ToolTipIcon.Info);
                     _trayIcon.Icon = IconFactory.MakeOne('S', Brushes.GreenYellow);
                     return;
                 }
+
             }
             else
             {
@@ -214,6 +247,7 @@ namespace DR.NummerStripper
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
                 var text = _clipboard.ClipboardText;
+
                 if (WhatsOnPrdNmr.IsMatch(text))
                 {
                     Clipboard.SetText(text.Replace("-",String.Empty));
