@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DR.NummerStripper
@@ -17,6 +18,15 @@ namespace DR.NummerStripper
         [STAThread]
         private static void Main(string[] args)
         {
+            const string mutexName = "DR.NummerStripper";
+
+            var mutex = new Mutex(true, mutexName, out var createdNew);
+
+            if (!createdNew)
+            {
+                Console.WriteLine(mutexName + " is already running! Exiting the application.");
+                return;
+            }
             // always show accelerator underlines
             SystemParametersInfo(SPI_SETKEYBOARDCUES, 0, 1, 0);
             Application.EnableVisualStyles();

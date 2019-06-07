@@ -62,6 +62,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -128,7 +136,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_79BF916C07A6453B8B9DEB5B502BCA66"
@@ -253,15 +261,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DR.NummerStripper"
-        "ProductCode" = "8:{88311661-0437-43C3-8C77-481066A19A8F}"
-        "PackageCode" = "8:{B1789A89-3C32-49EB-A3E8-7EDFFE50364C}"
+        "ProductCode" = "8:{A8A7C4CB-C0AD-4DF5-A2A5-899C135D0B80}"
+        "PackageCode" = "8:{C69B2C91-2EE2-4576-82C9-F39C80485F7E}"
         "UpgradeCode" = "8:{AC6F0688-241B-41B6-AED8-B3DF768274F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.0"
+        "ProductVersion" = "8:1.4.1"
         "Manufacturer" = "8:DR TU Streaming"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/drdk/DR.NummerStripper/"
