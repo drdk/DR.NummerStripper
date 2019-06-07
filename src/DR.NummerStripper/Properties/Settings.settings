@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DR.NummerStripper.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ProductionNumberLinks" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="ProductionNumberLinks" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;MA;http://ma:7000/#!/search/item?q={prdNbr}&lt;/string&gt;
@@ -13,6 +13,8 @@
   &lt;string&gt;Marvin;http://marvin/?environment=Production#!filter={prdNbr}&lt;/string&gt;
   &lt;string&gt;WOCache od pubs;http://wocache/api/od-publications/search/findByProductionNumber?productionNumber={prdNbr}&lt;/string&gt;
   &lt;string&gt;WOCache flow;http://wocache/api/flow-publications/search/findByProductionNumber?productionNumber={prdNbr}&lt;/string&gt;
+  &lt;string&gt;OD3 LogViewer;http://odps/od-dashboard/LogViewer?correlationId={prdNbr}&lt;/string&gt;
+  &lt;string&gt;OD3 Pub Viewer;http://odps/od-dashboard/PublicationViewer?productionId={prdNbr}&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>

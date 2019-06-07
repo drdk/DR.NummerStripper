@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DR.Common.RESTClient" Version="1.0.8" />
     <PackageReference Include="SharpClipboard" Version="3.0.0" />
   </ItemGroup>
 

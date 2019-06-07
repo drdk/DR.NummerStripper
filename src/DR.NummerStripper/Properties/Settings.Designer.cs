@@ -23,7 +23,7 @@ namespace DR.NummerStripper.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
@@ -35,13 +35,12 @@ namespace DR.NummerStripper.Properties {
   <string>Marvin;http://marvin/?environment=Production#!filter={prdNbr}</string>
   <string>WOCache od pubs;http://wocache/api/od-publications/search/findByProductionNumber?productionNumber={prdNbr}</string>
   <string>WOCache flow;http://wocache/api/flow-publications/search/findByProductionNumber?productionNumber={prdNbr}</string>
+  <string>OD3 LogViewer;http://odps/od-dashboard/LogViewer?correlationId={prdNbr}</string>
+  <string>OD3 Pub Viewer;http://odps/od-dashboard/PublicationViewer?productionId={prdNbr}</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection ProductionNumberLinks {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ProductionNumberLinks"]));
-            }
-            set {
-                this["ProductionNumberLinks"] = value;
             }
         }
     }

@@ -15,26 +15,32 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+        "MsmKey" = "8:_87B7B8938C6845B4BD8FBE8DDB11E796"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_D659C1DCA22D82D868555A674424957B"
-        "OwnerKey" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+        "OwnerKey" = "8:_DC138C9344954A36AAEB104D3A2679E9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+        "MsmKey" = "8:_DC138C9344954A36AAEB104D3A2679E9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D659C1DCA22D82D868555A674424957B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DC138C9344954A36AAEB104D3A2679E9"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -132,14 +138,40 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_79BF916C07A6453B8B9DEB5B502BCA66"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D659C1DCA22D82D868555A674424957B"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:SharpClipboard, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_79BF916C07A6453B8B9DEB5B502BCA66"
+                }
+            "SourcePath" = "8:SharpClipboard.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80F21B8381D0433BAF98D932F877B962"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DC138C9344954A36AAEB104D3A2679E9"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DC138C9344954A36AAEB104D3A2679E9"
                     {
                     "Name" = "8:DR.NummerStripper.exe"
                     "Attributes" = "3:512"
@@ -161,37 +193,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D659C1DCA22D82D868555A674424957B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SharpClipboard, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D659C1DCA22D82D868555A674424957B"
-                    {
-                    "Name" = "8:SharpClipboard.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SharpClipboard.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_80F21B8381D0433BAF98D932F877B962"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -261,15 +262,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DR.NummerStripper"
-        "ProductCode" = "8:{A8A7C4CB-C0AD-4DF5-A2A5-899C135D0B80}"
-        "PackageCode" = "8:{C69B2C91-2EE2-4576-82C9-F39C80485F7E}"
+        "ProductCode" = "8:{E4887420-B372-45F9-A507-EC25A4C70C10}"
+        "PackageCode" = "8:{54E363D0-C471-41BF-8443-3BF2913E1F82}"
         "UpgradeCode" = "8:{AC6F0688-241B-41B6-AED8-B3DF768274F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.1"
+        "ProductVersion" = "8:1.5.0"
         "Manufacturer" = "8:DR TU Streaming"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/drdk/DR.NummerStripper/"
@@ -279,7 +280,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Lille værktøj til at rense productionsnumre kopieret fra WhatsOn. Og til at un-escape UNC-stier."
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+        "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:32512"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -390,10 +391,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+            "Target" = "8:_DC138C9344954A36AAEB104D3A2679E9"
             "Folder" = "8:_FC89AF16127C4BB3A5FE767FC46EC812"
             "WorkingFolder" = "8:_80F21B8381D0433BAF98D932F877B962"
-            "Icon" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+            "Icon" = "8:_DC138C9344954A36AAEB104D3A2679E9"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D173F63E2AA44E7FAC1014A341DE0A52"
@@ -404,10 +405,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+            "Target" = "8:_DC138C9344954A36AAEB104D3A2679E9"
             "Folder" = "8:_A6460C02000B4AA0B9D248146C625F3C"
             "WorkingFolder" = "8:_80F21B8381D0433BAF98D932F877B962"
-            "Icon" = "8:_79BF916C07A6453B8B9DEB5B502BCA66"
+            "Icon" = "8:_DC138C9344954A36AAEB104D3A2679E9"
             "Feature" = "8:"
             }
         }
@@ -809,7 +810,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4EC3C65125654542BD24E1D0C86BB050"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8078225640434324AEBFBC7C7D4B70D0"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -830,7 +831,35 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Symbols"
+            "OutputGroupCanonicalName" = "8:PublishItemsOutputGroup"
+            "OutputProjectGuid" = "8:{7E3A51CD-5525-482E-83B3-DF285132868C}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_87B7B8938C6845B4BD8FBE8DDB11E796"
+            {
+            "SourcePath" = "8:..\\DR.NummerStripper\\obj\\Debug\\net461\\DR.NummerStripper.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80F21B8381D0433BAF98D932F877B962"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:BuiltProjectOutputGroup"
             "OutputProjectGuid" = "8:{7E3A51CD-5525-482E-83B3-DF285132868C}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"

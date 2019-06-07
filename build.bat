@@ -1,0 +1,1 @@
+devenv src\DR.NummerStripper.sln  /Project src\Installer\Installer.vdproj  /Build "Release"
