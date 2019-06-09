@@ -24,10 +24,13 @@ namespace DR.NummerStripper
         private SharpClipboard _clipboard;
         private readonly KeyboardHook _startHook;
         private ProductionForm _productionForm = null;
+        private readonly ProductionService _productionService;
 
 
         public TrayIconContext(string[] args)
         {
+            _productionService = new ProductionService();
+            
             _startCurrent = new MenuItem("Prøv at  &Starte nuværende indhold (Ctrl+Alt+Shift+S)", StartCurrent);
             if (!Clipboard.ContainsText() || !SafeToStart(Clipboard.GetText()))
             {
@@ -90,7 +93,7 @@ namespace DR.NummerStripper
                        (File.Exists(text) ||
                         Directory.Exists(text) ||
                         Uri.IsWellFormedUriString(text, UriKind.Absolute) || 
-                        PrdNmr.IsMatch(text));
+                        PrdNbr.IsMatch(text));
             }
             catch (Exception e)
             {
@@ -107,6 +110,7 @@ namespace DR.NummerStripper
             _clipboard?.Dispose();
             _startHook?.Dispose();
             _productionForm?.Dispose();
+            
             Application.Exit();
         }
 
@@ -144,13 +148,10 @@ namespace DR.NummerStripper
 
         void StartOrUpdateProductionForm(string prdNbr)
         {
+            _productionService.ProductionNumber = prdNbr;
             if (_productionForm == null || _productionForm.IsDisposed)
             {
-                _productionForm = new ProductionForm(prdNbr);
-            }
-            else
-            {
-                _productionForm.PrdNbr = prdNbr;
+                _productionForm = new ProductionForm(_productionService);
             }
             _productionForm.Show();
             _productionForm.BringToFront();
@@ -161,7 +162,7 @@ namespace DR.NummerStripper
         {
             if (SafeToStart(text))
             {
-                if (PrdNmr.IsMatch(text))
+                if (PrdNbr.IsMatch(text))
                 {
                     StartOrUpdateProductionForm(text);
                 }
@@ -200,7 +201,7 @@ namespace DR.NummerStripper
 
         private Regex EscapedUncPath = new Regex(@"^\\{4}", RegexOptions.Compiled);
         private Regex WhatsOnPrdNmr = new Regex(@"^[01]-\d{3}-\d{2}-\d{4}-\d$", RegexOptions.Compiled);
-        private Regex PrdNmr = new Regex(@"[01]\d{9}", RegexOptions.Compiled);
+        private Regex PrdNbr = new Regex(@"^[01]\d{10}$", RegexOptions.Compiled);
         private string _lastText = string.Empty;
 
         private void UpdateIcon()
@@ -215,8 +216,9 @@ namespace DR.NummerStripper
 
                 _startCurrent.Enabled = safe;
 
-                if (PrdNmr.IsMatch(text))
+                if (PrdNbr.IsMatch(text))
                 {
+                    _productionService.Cache(text);
                     _trayIcon.ShowBalloonTip(2000, "Produktionsnummer", text, ToolTipIcon.Info);
                     _trayIcon.Icon = IconFactory.MakeOne('P', Brushes.Red);
                     if (_productionForm != null && !_productionForm.IsDisposed)

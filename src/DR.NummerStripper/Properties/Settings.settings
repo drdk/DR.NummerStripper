@@ -8,6 +8,7 @@
   &lt;string&gt;MA;http://ma:7000/#!/search/item?q={prdNbr}&lt;/string&gt;
   &lt;string&gt;OD PubPlan;https://odpubplan/Publication/Search?query={prdNbr}&lt;/string&gt;
   &lt;string&gt;PSDB Admin;http://mu.net.dr.dk/admin/#searchString={prdNbr}&amp;amp;searchCategories=10%2C20%2C30%2C90&amp;amp;limit=20&amp;amp;channelType=TV%2CRADIO&lt;/string&gt;
+  &lt;string&gt;MU api;http://mu.net.dr.dk/api/programcard?ProductionNumber=%22{prdNbr}%22&lt;/string&gt;
   &lt;string&gt;UQC;http://mccpweb/qclogapi/overview?pro_number={prdNbr}&lt;/string&gt;
   &lt;string&gt;Manis;http://manis-od.net.dr.dk/api/mediaassets?productionNumber={prdNbr}&lt;/string&gt;
   &lt;string&gt;Marvin;http://marvin/?environment=Production#!filter={prdNbr}&lt;/string&gt;
