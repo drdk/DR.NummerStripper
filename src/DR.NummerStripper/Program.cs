@@ -16,7 +16,7 @@ namespace DR.NummerStripper
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main(string[] args)
+        private static void Main()
         {
             const string mutexName = "DR.NummerStripper";
 
@@ -31,7 +31,7 @@ namespace DR.NummerStripper
             SystemParametersInfo(SPI_SETKEYBOARDCUES, 0, 1, 0);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TrayIconContext(args));
+            Application.Run(new TrayIconContext());
             SystemParametersInfo(SPI_SETKEYBOARDCUES, 0, 0, 0);
 
         }

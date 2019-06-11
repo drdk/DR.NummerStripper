@@ -56,7 +56,7 @@ namespace DR.NummerStripper.MU
             lock (_cache)
             {
                 var pc = GetByProductionNumber(prdNbr);
-                _current = new Result
+                Current = new Result
                 {
                     ProductionNumber = prdNbr,
                     ProgramCard = pc,

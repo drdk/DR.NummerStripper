@@ -21,6 +21,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8C0AE05281F333938A2BC0A5871141BA"
+        "OwnerKey" = "8:_DC138C9344954A36AAEB104D3A2679E9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BB1D49204A1F2A06D8E99A88D392B3A6"
+        "OwnerKey" = "8:_8C0AE05281F333938A2BC0A5871141BA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D659C1DCA22D82D868555A674424957B"
         "OwnerKey" = "8:_DC138C9344954A36AAEB104D3A2679E9"
         "MsmSig" = "8:_UNDEFINED"
@@ -34,13 +46,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DC138C9344954A36AAEB104D3A2679E9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D659C1DCA22D82D868555A674424957B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DC138C9344954A36AAEB104D3A2679E9"
+        "OwnerKey" = "8:_8C0AE05281F333938A2BC0A5871141BA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BB1D49204A1F2A06D8E99A88D392B3A6"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -138,6 +162,68 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8C0AE05281F333938A2BC0A5871141BA"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:DR.Common.RESTClient, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8C0AE05281F333938A2BC0A5871141BA"
+                    {
+                    "Name" = "8:DR.Common.RESTClient.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:DR.Common.RESTClient.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80F21B8381D0433BAF98D932F877B962"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BB1D49204A1F2A06D8E99A88D392B3A6"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BB1D49204A1F2A06D8E99A88D392B3A6"
+                    {
+                    "Name" = "8:Newtonsoft.Json.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Newtonsoft.Json.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80F21B8381D0433BAF98D932F877B962"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D659C1DCA22D82D868555A674424957B"
             {
             "AssemblyRegister" = "3:1"
@@ -145,6 +231,11 @@
             "AssemblyAsmDisplayName" = "8:SharpClipboard, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_D659C1DCA22D82D868555A674424957B"
+                    {
+                    "Name" = "8:SharpClipboard.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:SharpClipboard.DLL"
             "TargetName" = "8:"
@@ -168,9 +259,14 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_DC138C9344954A36AAEB104D3A2679E9"
+                    {
+                    "Name" = "8:DR.NummerStripper.exe"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\DR.NummerStripper\\bin\\Release\\net461\\DR.NummerStripper.exe"
             "TargetName" = "8:"
@@ -257,15 +353,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DR.NummerStripper"
-        "ProductCode" = "8:{7901510E-91C6-4697-BCDF-8198C4D2A665}"
-        "PackageCode" = "8:{FAA16277-2403-4ED5-8DB0-8FC47CB14B7C}"
+        "ProductCode" = "8:{C46C9AF7-0E2A-444F-AEC6-02B10B53DABF}"
+        "PackageCode" = "8:{5B21B71D-117F-4498-934D-D78840292D28}"
         "UpgradeCode" = "8:{AC6F0688-241B-41B6-AED8-B3DF768274F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.6.0"
+        "ProductVersion" = "8:1.6.1"
         "Manufacturer" = "8:DR TU Streaming"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/drdk/DR.NummerStripper/"

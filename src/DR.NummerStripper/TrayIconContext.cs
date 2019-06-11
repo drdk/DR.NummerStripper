@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using DR.NummerStripper.MU;
+using DR.NummerStripper.Properties;
 using WK.Libraries.SharpClipboardNS;
 
 namespace DR.NummerStripper
@@ -15,20 +16,20 @@ namespace DR.NummerStripper
     internal class TrayIconContext : ApplicationContext
     {
         private readonly NotifyIcon _trayIcon;
-        private Assembly _assembly => typeof(TrayIconContext).GetTypeInfo().Assembly;
+        private readonly Assembly _assembly = typeof(TrayIconContext).GetTypeInfo().Assembly;
         
-        private List<string> _history = new List<string>();
+        private readonly List<string> _history = new List<string>();
 
         private const int MaxItems = 8;
-        private MenuItem _startCurrent;
-        private MenuItem[] _baseItems;
-        private SharpClipboard _clipboard;
+        private readonly MenuItem _startCurrent;
+        private readonly MenuItem[] _baseItems;
+        private readonly SharpClipboard _clipboard;
         private readonly KeyboardHook _startHook;
         private ProductionForm _productionForm = null;
         private readonly ProductionService _productionService;
 
 
-        public TrayIconContext(string[] args)
+        public TrayIconContext()
         {
             _productionService = new ProductionService();
             
@@ -45,7 +46,7 @@ namespace DR.NummerStripper
                 new MenuItem("&Afslut", Exit),
             };
 
-            var icon = new System.Drawing.Icon(_assembly.GetManifestResourceStream("DR.NummerStripper.Icon.ico") ??
+            var icon = new Icon(_assembly.GetManifestResourceStream("DR.NummerStripper.Icon.ico") ??
                                                throw new InvalidOperationException());
             _trayIcon = new NotifyIcon()
             {
@@ -98,7 +99,7 @@ namespace DR.NummerStripper
                        (File.Exists(text) ||
                         Directory.Exists(text) ||
                         Uri.IsWellFormedUriString(text, UriKind.Absolute) || 
-                        PrdNbr.IsMatch(text));
+                        _prdNbr.IsMatch(text));
             }
             catch (Exception e)
             {
@@ -169,13 +170,14 @@ namespace DR.NummerStripper
         {
             if (SafeToStart(text))
             {
-                if (PrdNbr.IsMatch(text))
+                if (_prdNbr.IsMatch(text))
                 {
                     StartOrUpdateProductionForm(text);
                 }
                 else
                 {
                     var process = Process.Start(text);
+                    Debug.WriteLine($"{text} ({process?.Id})");
                 }
             }
         }
@@ -199,16 +201,15 @@ namespace DR.NummerStripper
 
         void Click(object sender, EventArgs e)
         {
-            var me = (e as MouseEventArgs);
-            if ((me.Button & MouseButtons.Left) != 0)
+            if (e is MouseEventArgs me && (me.Button & MouseButtons.Left) != 0)
             {
                 StartCurrent(sender, e);
             }
         }
 
-        private Regex EscapedUncPath = new Regex(@"^\\{4}", RegexOptions.Compiled);
-        private Regex WhatsOnPrdNmr = new Regex(@"^[01]-\d{3}-\d{2}-\d{4}-\d$", RegexOptions.Compiled);
-        private Regex PrdNbr = new Regex(@"^[01]\d{10}$", RegexOptions.Compiled);
+        private readonly Regex _escapedUncPath = new Regex(@"^\\{4}", RegexOptions.Compiled);
+        private readonly Regex _whatsOnPrdNmr = new Regex(@"^[01]-\d{3}-\d{2}-\d{4}-\d$", RegexOptions.Compiled);
+        private readonly Regex _prdNbr = new Regex(@"^[01]\d{10}$", RegexOptions.Compiled);
         private string _lastText = string.Empty;
 
         private void UpdateIcon()
@@ -223,10 +224,11 @@ namespace DR.NummerStripper
 
                 _startCurrent.Enabled = safe;
 
-                if (PrdNbr.IsMatch(text))
+                if (_prdNbr.IsMatch(text))
                 {
                     _productionService.Cache(text);
-                    _trayIcon.ShowBalloonTip(2000, "Produktionsnummer", text, ToolTipIcon.Info);
+                    if (Settings.Default.ShowBallonTips)
+                        _trayIcon.ShowBalloonTip(2000, "Produktionsnummer", text, ToolTipIcon.Info);
                     _trayIcon.Icon = IconFactory.MakeOne('P', Brushes.Red);
                     if (_productionForm != null && !_productionForm.IsDisposed)
                     {
@@ -236,7 +238,8 @@ namespace DR.NummerStripper
                 }
                 if (safe)
                 {
-                    _trayIcon.ShowBalloonTip(2000, "Startbar", text, ToolTipIcon.Info);
+                    if (Settings.Default.ShowBallonTips)
+                        _trayIcon.ShowBalloonTip(2000, "Startbar", text, ToolTipIcon.Info);
                     _trayIcon.Icon = IconFactory.MakeOne('S', Brushes.GreenYellow);
                     return;
                 }
@@ -257,11 +260,11 @@ namespace DR.NummerStripper
             {
                 var text = _clipboard.ClipboardText;
 
-                if (WhatsOnPrdNmr.IsMatch(text))
+                if (_whatsOnPrdNmr.IsMatch(text))
                 {
                     Clipboard.SetText(text.Replace("-",String.Empty));
                 }
-                else if (EscapedUncPath.IsMatch(text))
+                else if (_escapedUncPath.IsMatch(text))
                 {
                     Clipboard.SetText(text.Replace(@"\\",@"\"));
                 }

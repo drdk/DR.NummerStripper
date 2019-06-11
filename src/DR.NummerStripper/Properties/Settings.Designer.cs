@@ -44,5 +44,14 @@ namespace DR.NummerStripper.Properties {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ProductionNumberLinks"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowBallonTips {
+            get {
+                return ((bool)(this["ShowBallonTips"]));
+            }
+        }
     }
 }

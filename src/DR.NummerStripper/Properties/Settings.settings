@@ -18,5 +18,8 @@
   &lt;string&gt;OD3 Pub Viewer;http://odps/od-dashboard/PublicationViewer?productionId={prdNbr}&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
+    <Setting Name="ShowBallonTips" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
