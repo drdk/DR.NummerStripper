@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DR.NummerStripper
+namespace DR.NummerStripper.MU
 {
     public class ProgramCard
     {
@@ -13,6 +13,8 @@ namespace DR.NummerStripper
         public Channel ChannelType { get; set; }
         public Uri PrimaryImageUri { get; set; }
         public Uri PresentationUri { get; set; }
+        public string PrimaryChannel { get; set; }
+        public string PrimaryChannelSlug { get; set; }
         public string Description { get; set; }
         public DateTime? PrimaryBroadcastStartTime { get; set; }
     }

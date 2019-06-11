@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using DR.NummerStripper.MU;
 using DR.NummerStripper.Properties;
 
 namespace DR.NummerStripper
@@ -18,23 +19,24 @@ namespace DR.NummerStripper
         private PictureBox pictureBox;
         private Label dateLbl;
         private readonly ProductionService _productionService;
+        private Label channel;
         private Button btnDRDK;
 
         private void RefreshData()
         {
-            _prdNbr = _productionService.ProductionNumber;
+            _prdNbr = _productionService.Current.ProductionNumber;
             lbPrdNbr.Text = _prdNbr;
-            var pc = _productionService.ProgramCard;
+            var pc = _productionService.Current.ProgramCard;
             if (pc == null)
             {
-                title.Text = "[not found]";
                 panel2.Hide();
                 return;
             }
             panel2.Show();
             title.Text = pc.Title;
+            channel.Text = $"{pc.PrimaryChannel?.Split('/').Last()} ({pc.ChannelType})";
             dateLbl.Text = pc.PrimaryBroadcastStartTime?.ToString("g") ?? string.Empty;
-            pictureBox.Image = _productionService.Image;
+            pictureBox.Image = _productionService.Current.Image;
 
             btnDRDK.Enabled = pc.PresentationUri != null;
         }
@@ -54,7 +56,7 @@ namespace DR.NummerStripper
                 if (temp.Contains("{prdNbr}"))
                     temp = temp.Replace("{prdNbr}", _prdNbr);
                 if (temp.Contains("{PresentationUri}"))
-                    temp = temp.Replace("{PresentationUri}", _productionService.ProgramCard.PresentationUri.ToString());
+                    temp = temp.Replace("{PresentationUri}", _productionService.Current.ProgramCard.PresentationUri.ToString());
                 var process = Process.Start(temp);
                 this.Close();
             };
@@ -103,9 +105,10 @@ namespace DR.NummerStripper
             this.title = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.channel = new System.Windows.Forms.Label();
+            this.dateLbl = new System.Windows.Forms.Label();
             this.flowPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.dateLbl = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -114,7 +117,7 @@ namespace DR.NummerStripper
             // lbPrdNbr
             // 
             this.lbPrdNbr.AutoSize = true;
-            this.lbPrdNbr.Location = new System.Drawing.Point(3, 0);
+            this.lbPrdNbr.Location = new System.Drawing.Point(3, 4);
             this.lbPrdNbr.Name = "lbPrdNbr";
             this.lbPrdNbr.Size = new System.Drawing.Size(39, 13);
             this.lbPrdNbr.TabIndex = 0;
@@ -125,9 +128,9 @@ namespace DR.NummerStripper
             this.flowPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowPanel1.Location = new System.Drawing.Point(0, 29);
+            this.flowPanel1.Location = new System.Drawing.Point(0, 20);
             this.flowPanel1.Name = "flowPanel1";
-            this.flowPanel1.Size = new System.Drawing.Size(305, 477);
+            this.flowPanel1.Size = new System.Drawing.Size(305, 486);
             this.flowPanel1.TabIndex = 1;
             // 
             // helpText
@@ -144,7 +147,7 @@ namespace DR.NummerStripper
             // 
             this.title.AutoSize = true;
             this.title.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.title.Location = new System.Drawing.Point(3, 13);
+            this.title.Location = new System.Drawing.Point(3, 3);
             this.title.Name = "title";
             this.title.Size = new System.Drawing.Size(32, 13);
             this.title.TabIndex = 3;
@@ -156,7 +159,6 @@ namespace DR.NummerStripper
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.Controls.Add(this.flowPanel1);
             this.panel1.Controls.Add(this.helpText);
-            this.panel1.Controls.Add(this.title);
             this.panel1.Controls.Add(this.lbPrdNbr);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
@@ -168,13 +170,33 @@ namespace DR.NummerStripper
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.channel);
             this.panel2.Controls.Add(this.dateLbl);
             this.panel2.Controls.Add(this.flowPanel2);
+            this.panel2.Controls.Add(this.title);
             this.panel2.Controls.Add(this.pictureBox);
             this.panel2.Location = new System.Drawing.Point(324, 13);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(390, 527);
             this.panel2.TabIndex = 5;
+            // 
+            // channel
+            // 
+            this.channel.AutoSize = true;
+            this.channel.Location = new System.Drawing.Point(3, 16);
+            this.channel.Name = "channel";
+            this.channel.Size = new System.Drawing.Size(45, 13);
+            this.channel.TabIndex = 4;
+            this.channel.Text = "channel";
+            // 
+            // dateLbl
+            // 
+            this.dateLbl.AutoSize = true;
+            this.dateLbl.Location = new System.Drawing.Point(3, 29);
+            this.dateLbl.Name = "dateLbl";
+            this.dateLbl.Size = new System.Drawing.Size(42, 13);
+            this.dateLbl.TabIndex = 2;
+            this.dateLbl.Text = "dateLbl";
             // 
             // flowPanel2
             // 
@@ -191,15 +213,6 @@ namespace DR.NummerStripper
             this.pictureBox.Size = new System.Drawing.Size(160, 90);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
-            // 
-            // dateLbl
-            // 
-            this.dateLbl.AutoSize = true;
-            this.dateLbl.Location = new System.Drawing.Point(0, 3);
-            this.dateLbl.Name = "dateLbl";
-            this.dateLbl.Size = new System.Drawing.Size(42, 13);
-            this.dateLbl.TabIndex = 2;
-            this.dateLbl.Text = "dateLbl";
             // 
             // ProductionForm
             // 

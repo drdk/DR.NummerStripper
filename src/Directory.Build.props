@@ -3,7 +3,7 @@
     <Copyright>DR (Danish Broadcasting Corporation)</Copyright>
     <Company>DR (Danish Broadcasting Corporation)</Company>
     <Authors>DR TU - Ondemand Team</Authors>
-    <Version>1.5.0</Version>
+    <Version>1.6.0</Version>
     <RepositoryUrl>https://github.com/drdk/DR.NummerStripper/</RepositoryUrl>    
   </PropertyGroup>
 </Project>

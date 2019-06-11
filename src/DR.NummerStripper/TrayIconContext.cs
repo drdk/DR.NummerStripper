@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using DR.NummerStripper.MU;
 using WK.Libraries.SharpClipboardNS;
 
 namespace DR.NummerStripper
@@ -81,6 +82,10 @@ namespace DR.NummerStripper
                         new MenuItem($"&{c++}: {Crop(x)}", Start) : new MenuItem($"&{c++}: {Crop(x)}", Copy)).Concat(_baseItems).ToArray());
             }
         }
+        private string GetTextFromHistory(MenuItem menuItem) =>
+            _history.AsEnumerable().Reverse().Skip(
+                int.Parse(menuItem.Text.Substring(1, 1)) - 1).First();
+
 
         private string Crop(string text) => 
             text.Length > 96 ? $"{text.Substring(0, 96)}..." : text;
@@ -121,22 +126,24 @@ namespace DR.NummerStripper
 
             if (Attribute.IsDefined(_assembly, typeof(AssemblyDescriptionAttribute)))
             {
-                var a = (AssemblyDescriptionAttribute)Attribute.GetCustomAttribute(_assembly, typeof(AssemblyDescriptionAttribute));
+                var a = (AssemblyDescriptionAttribute) Attribute.GetCustomAttribute(_assembly,
+                    typeof(AssemblyDescriptionAttribute));
+
                 aboutText = a.Description;
             }
 
+            aboutText += $"{Environment.NewLine}Version: {_assembly.GetName().Version}";
+
             if (Attribute.IsDefined(_assembly, typeof(AssemblyTitleAttribute)))
             {
-                var a = (AssemblyTitleAttribute)Attribute.GetCustomAttribute(_assembly, typeof(AssemblyTitleAttribute));
+                var a = (AssemblyTitleAttribute)Attribute.GetCustomAttribute(_assembly,
+                    typeof(AssemblyTitleAttribute));
+
                 aboutCaption = a.Title;
             }
 
             MessageBox.Show(aboutText, aboutCaption, MessageBoxButtons.OK);
         }
-
-        private string GetTextFromHistory(MenuItem menuItem) =>
-            _history.AsEnumerable().Reverse().Skip(
-                int.Parse(menuItem.Text.Substring(1,1)) - 1 ).First();
 
         void Start(object sender, EventArgs e)
         {
@@ -148,7 +155,7 @@ namespace DR.NummerStripper
 
         void StartOrUpdateProductionForm(string prdNbr)
         {
-            _productionService.ProductionNumber = prdNbr;
+            _productionService.Load(prdNbr);
             if (_productionForm == null || _productionForm.IsDisposed)
             {
                 _productionForm = new ProductionForm(_productionService);

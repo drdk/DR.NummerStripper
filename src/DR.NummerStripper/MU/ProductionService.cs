@@ -1,35 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DR.Common.RESTClient;
+using DR.NummerStripper.Annotations;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Net;
 using System.Runtime.Caching;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using DR.Common.RESTClient;
-using DR.NummerStripper.Annotations;
 
-namespace DR.NummerStripper
+namespace DR.NummerStripper.MU
 {
     public class ProductionService : INotifyPropertyChanged
     {
-
-        public string _productionNumber;
-        public string ProductionNumber
+        private readonly IJsonClient _jsonClient;
+        private readonly ObjectCache _cache;
+        public ProductionService()
         {
-            get => _productionNumber;
-            set
+            _cache = MemoryCache.Default;
+            _jsonClient = new JsonClient(true)
             {
-                _productionNumber = value;
-                OnPropertyChanged(nameof(ProductionNumber));
+                BaseURL = "https://www.dr.dk/mu-online/api/1.4"
+            };
+        }
+
+        private class Result : IResult
+        {
+            public string ProductionNumber { get; set; }
+            public ProgramCard ProgramCard { get; set; }
+            public Image Image { get; set; }
+        }
+
+        private IResult _current;
+        public IResult Current
+        {
+            get => _current;
+            private set
+            {
+                _current = value;
+                OnPropertyChanged(nameof(Current));
             }
         }
 
-        public ProgramCard ProgramCard => GetByProductionNumber(_productionNumber);
-        public Image Image => GetImage(ProgramCard.PrimaryImageUri);
+        public void Cache(string prdNbr)
+        {
+            lock (_cache)
+            {
+                // load into cache.
+                var temp = GetByProductionNumber(prdNbr);
+                var tempImg = GetImage(temp?.PrimaryImageUri);
+            }
+        }
+
+        public void Load(string prdNbr)
+        {
+            lock (_cache)
+            {
+                var pc = GetByProductionNumber(prdNbr);
+                _current = new Result
+                {
+                    ProductionNumber = prdNbr,
+                    ProgramCard = pc,
+                    Image = GetImage(pc?.PrimaryImageUri)
+                };
+            }
+        }
 
         private Image GetImage(Uri uri)
         {
@@ -64,24 +98,7 @@ namespace DR.NummerStripper
                 Debug.WriteLine($"{key} not found or error. ({e.Message})");
 
             }
-
             return null;
-
-        }
-
-        private readonly IJsonClient _jsonClient;
-        private readonly ObjectCache _cache;
-        public ProductionService()
-        {
-            _cache = MemoryCache.Default;
-            _jsonClient = new JsonClient(true) { BaseURL = "https://www.dr.dk/mu-online/api/1.4" };
-        }
-
-        public void Cache(string prdNbr)
-        {
-            // load into cache.
-            var temp = GetByProductionNumber(prdNbr);
-            var tempImg = GetImage(temp?.PrimaryImageUri);
         }
 
         private ProgramCard GetByProductionNumber(string prdNbr)
@@ -105,7 +122,6 @@ namespace DR.NummerStripper
             }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -115,4 +131,5 @@ namespace DR.NummerStripper
         }
 
     }
+
 }

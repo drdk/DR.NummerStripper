@@ -168,14 +168,9 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DR.NummerStripper, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_DC138C9344954A36AAEB104D3A2679E9"
-                    {
-                    "Name" = "8:DR.NummerStripper.exe"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:..\\DR.NummerStripper\\bin\\Release\\net461\\DR.NummerStripper.exe"
             "TargetName" = "8:"
@@ -262,15 +257,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DR.NummerStripper"
-        "ProductCode" = "8:{E4887420-B372-45F9-A507-EC25A4C70C10}"
-        "PackageCode" = "8:{54E363D0-C471-41BF-8443-3BF2913E1F82}"
+        "ProductCode" = "8:{7901510E-91C6-4697-BCDF-8198C4D2A665}"
+        "PackageCode" = "8:{FAA16277-2403-4ED5-8DB0-8FC47CB14B7C}"
         "UpgradeCode" = "8:{AC6F0688-241B-41B6-AED8-B3DF768274F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.5.0"
+        "ProductVersion" = "8:1.6.0"
         "Manufacturer" = "8:DR TU Streaming"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/drdk/DR.NummerStripper/"
@@ -840,7 +835,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_87B7B8938C6845B4BD8FBE8DDB11E796"
             {
-            "SourcePath" = "8:..\\DR.NummerStripper\\obj\\Debug\\net461\\DR.NummerStripper.exe"
+            "SourcePath" = "8:..\\DR.NummerStripper\\obj\\Release\\net461\\DR.NummerStripper.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_80F21B8381D0433BAF98D932F877B962"

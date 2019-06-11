@@ -1,4 +1,4 @@
-﻿namespace DR.NummerStripper
+﻿namespace DR.NummerStripper.MU
 {
     public enum Channel
     {
