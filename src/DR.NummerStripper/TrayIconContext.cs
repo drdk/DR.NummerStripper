@@ -271,8 +271,8 @@ namespace DR.NummerStripper
 
                 text = Clipboard.GetText();
                 UpdateHistory(text);
-                UpdateIcon();
             }
+            UpdateIcon();
         }
     }
 }
