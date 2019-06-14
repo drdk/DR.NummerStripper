@@ -1,5 +1,5 @@
 
-# DR.NummerStripper
+# DR Udklipsholderhjælper
 Lille værktøj til at rense productionsnumre kopieret fra WhatsOn. Og til at un-escape UNC-stier. 
 
 ## Installation
@@ -8,6 +8,7 @@ Du kan læse changelog under [Releases](https://github.com/drdk/DR.NummerStrippe
 
 ## Brug
 Tilføj som start-program. Tryk Ctrl+Alt+Shift+S for at prøve at starte indholdet af udklipningsholderen. Inderholder også et hjælpeværktøj med links til forskellige systemer hvor man kan søge på produktionsnumre.
+Tryk Ctrl+Alt+Shift+W for at aktivere WhatsOn mode hvor bindestrege beholdes/indsættes i produktionsnumre. 
 ![screenshot](screenshot.png)
 
 ## Krav til at bygge

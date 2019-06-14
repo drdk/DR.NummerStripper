@@ -206,16 +206,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:DR.NummerStripper"
-        "ProductCode" = "8:{5B7FF5B0-D7E1-4270-825A-3E6B54104DDE}"
-        "PackageCode" = "8:{BB09D3D3-9BC6-41E2-B98D-EA585A23C645}"
+        "ProductName" = "8:DR.Udklipsholderhjælper"
+        "ProductCode" = "8:{2A76727E-88D9-4DB5-886D-3068CEF7C654}"
+        "PackageCode" = "8:{7ABB4A99-DFB5-42D3-AE9B-5EF1E51F01F8}"
         "UpgradeCode" = "8:{AC6F0688-241B-41B6-AED8-B3DF768274F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.7.0"
+        "ProductVersion" = "8:1.8.0"
         "Manufacturer" = "8:DR TU Streaming"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/drdk/DR.NummerStripper/"
@@ -330,7 +330,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A394734608734758B09C4A87DD0908AC"
             {
-            "Name" = "8:DR.NummerStripper"
+            "Name" = "8:DR Udklipsholderhjælper"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -344,7 +344,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DC7C41A93BCC46CDAAD0F4C5A91662CE"
             {
-            "Name" = "8:DR.NummerStripper"
+            "Name" = "8:DR Udklipsholders- hjælper"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -757,7 +757,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0291BF942C774EA19B4DCABF926A992F"
             {
-            "SourcePath" = "8:..\\DR.NummerStripper\\obj\\Release\\net461\\DR.NummerStripper.exe"
+            "SourcePath" = "8:..\\DR.NummerStripper\\obj\\Debug\\net461\\DR.Udklipsholderhjælper.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_80F21B8381D0433BAF98D932F877B962"

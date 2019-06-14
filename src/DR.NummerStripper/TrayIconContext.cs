@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using DR.NummerStripper.MU;
 using DR.NummerStripper.Properties;
@@ -22,11 +21,17 @@ namespace DR.NummerStripper
 
         private const int MaxItems = 8;
         private readonly MenuItem _startCurrent;
+        private readonly MenuItem _whatsOnModeToggle;
+        private bool WhatsOnMode => _whatsOnModeToggle.Checked;
         private readonly MenuItem[] _baseItems;
         private readonly SharpClipboard _clipboard;
         private readonly KeyboardHook _startHook;
+        private readonly KeyboardHook _whatsOnHook;
+
         private ProductionForm _productionForm = null;
         private readonly ProductionService _productionService;
+
+        private string _lastText = string.Empty;
 
 
         public TrayIconContext()
@@ -34,6 +39,8 @@ namespace DR.NummerStripper
             _productionService = new ProductionService();
             
             _startCurrent = new MenuItem("Prøv at  &Starte nuværende indhold (Ctrl+Alt+Shift+S)", StartCurrent);
+            _whatsOnModeToggle = new MenuItem("WhatsOn Mode (Ctrl+Alt+Shift+W)", ToggleWhatsOnMode);
+
             if (!Clipboard.ContainsText() || !SafeToStart(Clipboard.GetText()))
             {
                 _startCurrent.Enabled = false;
@@ -42,6 +49,7 @@ namespace DR.NummerStripper
             {
                 new MenuItem("-"),
                 _startCurrent,
+                _whatsOnModeToggle,
                 new MenuItem("&Om", About),
                 new MenuItem("&Afslut", Exit),
             };
@@ -53,7 +61,7 @@ namespace DR.NummerStripper
                 Icon = icon,
                 ContextMenu = new ContextMenu(_baseItems),
                 Visible = true,
-                Text = "NummerStripper",
+                Text = "DR Udklipsholderhjælper",
             };
 
             _trayIcon.Click += Click;
@@ -63,8 +71,12 @@ namespace DR.NummerStripper
             _startHook = new KeyboardHook();
             _startHook.RegisterHotKey(ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Shift, Keys.S);
             _startHook.KeyPressed += StartCurrent;
+            _whatsOnHook = new KeyboardHook();
+            _whatsOnHook.RegisterHotKey(ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Shift, Keys.W);
+            _whatsOnHook.KeyPressed += ToggleWhatsOnMode;
         }
 
+   
         private void UpdateHistory(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return;
@@ -99,13 +111,28 @@ namespace DR.NummerStripper
                        (File.Exists(text) ||
                         Directory.Exists(text) ||
                         Uri.IsWellFormedUriString(text, UriKind.Absolute) || 
-                        _prdNbr.IsMatch(text));
+                        text.IsProductionNumber());
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        private void ToggleWhatsOnMode(object sender, EventArgs e)
+        {
+            _whatsOnModeToggle.Checked = !WhatsOnMode;
+
+            if (!Clipboard.ContainsText()) return;
+
+            var text = Clipboard.GetText();
+
+            if (!text.IsProductionNumber()) return;
+
+            text = WhatsOnMode ? text.ToWhatsOnProductionNumber() : text.ToCleanProductionNumber();
+
+            Clipboard.SetText(text);
         }
 
 
@@ -115,6 +142,7 @@ namespace DR.NummerStripper
             _trayIcon.Visible = false;
             _clipboard?.Dispose();
             _startHook?.Dispose();
+            _whatsOnHook?.Dispose();
             _productionForm?.Dispose();
             
             Application.Exit();
@@ -156,7 +184,7 @@ namespace DR.NummerStripper
 
         void StartOrUpdateProductionForm(string prdNbr)
         {
-            _productionService.Load(prdNbr);
+            _productionService.Load(prdNbr.ToCleanProductionNumber());
             if (_productionForm == null || _productionForm.IsDisposed)
             {
                 _productionForm = new ProductionForm(_productionService);
@@ -170,7 +198,7 @@ namespace DR.NummerStripper
         {
             if (SafeToStart(text))
             {
-                if (_prdNbr.IsMatch(text))
+                if (text.IsProductionNumber())
                 {
                     StartOrUpdateProductionForm(text);
                 }
@@ -207,10 +235,7 @@ namespace DR.NummerStripper
             }
         }
 
-        private readonly Regex _escapedUncPath = new Regex(@"^\\{4}", RegexOptions.Compiled);
-        private readonly Regex _whatsOnPrdNmr = new Regex(@"^[01]-\d{3}-\d{2}-\d{4}-\d$", RegexOptions.Compiled);
-        private readonly Regex _prdNbr = new Regex(@"^[01]\d{10}$", RegexOptions.Compiled);
-        private string _lastText = string.Empty;
+
 
         private void UpdateIcon()
         {
@@ -224,18 +249,20 @@ namespace DR.NummerStripper
 
                 _startCurrent.Enabled = safe;
 
-                if (_prdNbr.IsMatch(text))
+                if (text.IsProductionNumber())
                 {
-                    _productionService.Cache(text);
+                    _productionService.Cache(text.ToCleanProductionNumber());
                     if (Settings.Default.ShowBallonTips)
                         _trayIcon.ShowBalloonTip(2000, "Produktionsnummer", text, ToolTipIcon.Info);
-                    _trayIcon.Icon = IconFactory.MakeOne('P', Brushes.Red);
+                    _trayIcon.Icon = text.IsWhatsOnProductionNumber() ?
+                        IconFactory.MakeOne('W', Brushes.DeepSkyBlue):
+                        IconFactory.MakeOne('P', Brushes.Red);
                     if (_productionForm != null && !_productionForm.IsDisposed)
                     {
                         StartOrUpdateProductionForm(text);
                     }
                     return;
-                }
+                } 
                 if (safe)
                 {
                     if (Settings.Default.ShowBallonTips)
@@ -260,13 +287,13 @@ namespace DR.NummerStripper
             {
                 var text = _clipboard.ClipboardText;
 
-                if (_whatsOnPrdNmr.IsMatch(text))
+                if (text.IsProductionNumber())
                 {
-                    Clipboard.SetText(text.Replace("-",String.Empty));
+                    Clipboard.SetText(WhatsOnMode ? text.ToWhatsOnProductionNumber() : text.ToCleanProductionNumber());
                 }
-                else if (_escapedUncPath.IsMatch(text))
+                else if (text.IsEscapedUncPath())
                 {
-                    Clipboard.SetText(text.Replace(@"\\",@"\"));
+                    Clipboard.SetText(text.UnescapedUncPath());
                 }
 
                 text = Clipboard.GetText();

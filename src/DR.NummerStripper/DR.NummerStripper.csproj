@@ -6,6 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Description>Lille værktøj til at rense productionsnumre kopieret fra WhatsOn. Og til at un-escape UNC-stier. Tryk Ctrl+Alt+Shift+S for at prøve at starte indholdet af udklipsholderen.</Description>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <AssemblyName>DR.Udklipsholderhjælper</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
