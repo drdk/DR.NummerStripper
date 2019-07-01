@@ -213,6 +213,7 @@ namespace DR.NummerStripper
             this.pictureBox.Size = new System.Drawing.Size(160, 90);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
+            this.pictureBox.Click += new System.EventHandler(this.PictureBox_Click);
             // 
             // ProductionForm
             // 
@@ -235,5 +236,14 @@ namespace DR.NummerStripper
 
         }
 
+        private void PictureBox_Click(object sender, System.EventArgs e)
+        {
+            if (_productionService.Current.ProgramCard?.PrimaryImageUri != null)
+            {
+                var p = Process.Start(_productionService.Current.ProgramCard.PrimaryImageUri + "?raw=true");
+            }
+
+            this.Close();
+        }
     }
 }

@@ -66,8 +66,9 @@ namespace DR.NummerStripper
 
             _trayIcon.Click += Click;
             _trayIcon.BalloonTipClicked += StartCurrent;
-            _clipboard = new SharpClipboard();
+            _clipboard = new SharpClipboard { ObservableFormats = { Texts = true, Images = false, Files = false, Others = false }};
             _clipboard.ClipboardChanged += ClipboardChanged;
+            _clipboard.StartMonitoring();
             _startHook = new KeyboardHook();
             _startHook.RegisterHotKey(ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Shift, Keys.S);
             _startHook.KeyPressed += StartCurrent;
@@ -132,7 +133,7 @@ namespace DR.NummerStripper
 
             text = WhatsOnMode ? text.ToWhatsOnProductionNumber() : text.ToCleanProductionNumber();
 
-            Clipboard.SetText(text);
+            ClipboardUtil.TrySetText(text);
         }
 
 
@@ -218,12 +219,13 @@ namespace DR.NummerStripper
             Start(text);
         }
 
-
         void Copy(object sender, EventArgs e)
         {
-            if (sender is MenuItem menuItem)
+            if (!(sender is MenuItem menuItem)) return;
+            var newText = GetTextFromHistory(menuItem);
+            if (newText != Clipboard.GetText())
             {
-                Clipboard.SetText(GetTextFromHistory(menuItem));
+                ClipboardUtil.TrySetText(newText);
             }
         }
 
@@ -281,19 +283,20 @@ namespace DR.NummerStripper
 
         private void ClipboardChanged(Object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
-            
+            Debug.WriteLine(e.ContentType.ToString());
             // Is the content copied of text type?
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
-                var text = _clipboard.ClipboardText;
-
+                var text = (string) e.Content;
+                Debug.WriteLine(text);
                 if (text.IsProductionNumber())
                 {
-                    Clipboard.SetText(WhatsOnMode ? text.ToWhatsOnProductionNumber() : text.ToCleanProductionNumber());
+                    var newText = WhatsOnMode ? text.ToWhatsOnProductionNumber() : text.ToCleanProductionNumber();
+                    if (newText != text) { ClipboardUtil.TrySetText(newText); }
                 }
                 else if (text.IsEscapedUncPath())
                 {
-                    Clipboard.SetText(text.UnescapedUncPath());
+                    ClipboardUtil.TrySetText(text.UnescapedUncPath());
                 }
 
                 text = Clipboard.GetText();
